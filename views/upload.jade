@@ -1,0 +1,20 @@
+doctype html
+html
+    head
+        title= title
+        link(rel='stylesheet', href='/stylesheets/style.css')
+    body
+        h1 文件上传
+        h3 选择一个文件上传
+            form(enctype="multipart/form-data" method="post" )#imagelist
+                input(type="file" name="image")
+                input(type="text" name="picName")#picName
+                input(type="button" value="上传文件" onclick="upload()")
+                input(type="button" value="返回文件地址" onclick="getAllImages()")
+                input(type="button" value="下载文件" onclick="download('wechat_city.jpg')")
+
+        p#status
+        p#preview
+
+    script(src='/javascripts/jquery.min.js')
+    script(src='/javascripts/upload.js')
