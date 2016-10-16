@@ -1,4 +1,5 @@
-var OL_Action_Root = "http://127.0.0.1:3000";
+// var OL_Action_Root = "http://127.0.0.1:3000"; 
+var OL_Action_Root = "http://119.29.68.244:3000";
 
 function upload() {            
     var formData = new FormData($("#imagelist")[0]);

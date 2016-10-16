@@ -1,9 +1,14 @@
 var express = require('express');
 var path = require('path');
-var favicon = require('serve-favicon');
+// var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+
+var corser = require('corser'); // 解决跨域问题
+
+var mongoose = require('./config/mongoose.js');
+var db = mongoose();
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
@@ -14,13 +19,24 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
-// uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+// CORS 解决跨域
+app.use(corser.create({
+    methods: corser.simpleMethods.concat(["PUT"]),
+    requestHeaders: corser.simpleRequestHeaders.concat(["X-Requested-With"])
+}));
+app.all('*', function(request, response, next) {
+    response.header('Access-Control-Allow-Headers', 'Content-Type,X-Requested-With,Authorization,Access-Control-Allow-Origin');
+    response.header('Access-Control-Allow-Methods', 'POST,GET,DELETE');
+    response.header('Access-Control-Allow-Origin', '*');
+    next();
+});
 
 app.use('/', routes);
 app.use('/users', users);
