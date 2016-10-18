@@ -1,10 +1,13 @@
-  * 安装依赖 *
+  ## 安装依赖  
+
      npm install
      
-  # 安装pm2:
+  ## 安装pm2  
+
      npm install -g pm2
      
-  # 启动:
+  ## 启动  
+
      pm2 start ./bin/www
      
      注意！：本地没有安装 mongdb 会提示错误，虽然本地不需要，但是最好安装下。
@@ -60,5 +63,5 @@
        use admin
        db.shutdownServer()  
        
-  # 结束:
+  ## 结束:
      pm2 stop ./bin/www
