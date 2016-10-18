@@ -12,7 +12,8 @@
      
      注意！：本地没有安装 mongdb 会提示错误，虽然本地不需要，但是最好安装下。
      
-     1 下载<br>
+     1 下载  
+     
      curl -O https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-amazon-3.2.10.tgz
 
      2 解压<br>
