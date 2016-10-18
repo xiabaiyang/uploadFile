@@ -12,37 +12,38 @@
      
      注意！：本地没有安装 mongdb 会提示错误，虽然本地不需要，但是最好安装下。
      
-     1 下载
+     1 下载<br>
      curl -O https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-amazon-3.2.10.tgz
 
-     2 解压
+     2 解压<br>
      tar -zxvf mongodb-linux-x86_64-amazon-3.2.10.tgz
 
-     3 将解压包拷贝到指定目录
+     3 将解压包拷贝到指定目录<br>
      mv mongodb-linux-x86_64-amazon-3.2.10/ /usr/local/mongodb
 
-     4 MongoDB 的可执行文件位于 bin 目录下，需将其添加到 PATH 路径中
+     4 MongoDB 的可执行文件位于 bin 目录下，需将其添加到 PATH 路径中<br>
      export PATH=/usr/local/mongodb/bin:$PATH
 
-     5 查看是否安装mongdb
+     5 查看是否安装mongdb<br>
      which mongod
 
-     6 指定数据存储路径
+     6 指定数据存储路径<br>
      mkdir -p /data/db
 
      7 开启服务
-     A）mongdb目录下开启
+     A）mongdb目录下开启<br>
      mongod --dbpath=/data/db --port=27017
+     
      B）以守护进程方式开发(推荐)
      mongod --dbpath=/data/db --port=27017 --fork --logpath=/var/log/mongod.log
 
-     8 数据库常用操作
+     8 数据库常用操作<br>
      mongo
      show dbs
      show collections
      use xxx
 
-     9 关闭数据库服务（不用时一定记得关了，否则下次启动有概率💥）
+     9 关闭数据库服务（不用时一定记得关了，否则下次启动有概率💥）<br>
      A）
        mongod --shutdown
      B）
@@ -50,5 +51,5 @@
        use admin
        db.shutdownServer()
      
-  ## * 4 结束:
+  ## 4 结束:
      pm2 stop ./bin/www
