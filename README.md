@@ -30,7 +30,7 @@
      6) 指定数据存储路径
      mkdir -p /data/db
 
-     7. #开启服务
+     7) 开启服务
      A）mongdb目录下开启
      mongod --dbpath=/data/db --port=27017
      B）以守护进程方式开发(推荐)
@@ -42,10 +42,10 @@
      show collections
      use xxx
 
-    9) 关闭数据库服务（不用时一定记得关了，否则下次启动有概率💥）
-    A）
+     9) 关闭数据库服务（不用时一定记得关了，否则下次启动有概率💥）
+     A）
        mongod --shutdown
-    B）
+     B）
        mongo
        use admin
        db.shutdownServer()
