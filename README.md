@@ -62,6 +62,9 @@
        mongo
        use admin
        db.shutdownServer()  
+## 测试
+
+     进入：http://localhost:3000/upload
        
 ##结束  
 
