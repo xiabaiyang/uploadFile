@@ -13,13 +13,13 @@ function upload() {
         processData: false,
         success: function(data){
             var res = data;
-            if(res[0] == 'success')
+            if(res.msg == 'success')
             {
-                document.getElementById("status").innerHTML = "<span style='color:green'>文件上传成功！<br>文件名为："+res[1].filename+"</span>";
+                document.getElementById("status").innerHTML = "<span style='color:green'>文件上传成功</span>";
             }
             else
             {
-                document.getElementById("status").innerHTML = "<span style='color:#EF0000'>文件上传失败！<br>原因是："+res[1].msg+"</span>";
+                document.getElementById("status").innerHTML = "<span style='color:#EF0000'>文件上传失败</span>";
             }
         },
         error: function(jqXHR, textStatus, errorThrown){
