@@ -1,12 +1,12 @@
-  ##安装依赖  
+##安装依赖  
 
      npm install
      
-  ##安装pm2  
+##安装pm2  
 
      npm install -g pm2
      
-  ##启动  
+##启动  
 
      pm2 start ./bin/www
      
@@ -63,6 +63,6 @@
        use admin
        db.shutdownServer()  
        
-  ##结束  
+##结束  
 
      pm2 stop ./bin/www
