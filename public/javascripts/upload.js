@@ -1,5 +1,6 @@
 // var OL_Action_Root = "http://127.0.0.1:3000"; 
-var OL_Action_Root = "http://119.29.68.244:3000";
+// var OL_Action_Root = "http://119.29.68.244:3000";
+var OL_Action_Root = "http://104.131.78.218:3000";
 
 function upload() {            
     var formData = new FormData($("#imagelist")[0]);
@@ -16,6 +17,8 @@ function upload() {
             if(res.msg == 'success')
             {
                 document.getElementById("status").innerHTML = "<span style='color:green'>文件上传成功</span>";
+
+                document.getElementById("list").innerHTML = "<li>" + res.data.picName + "</li>";
             }
             else
             {

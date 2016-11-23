@@ -118,7 +118,10 @@ router.post('/file_upload', upload.array('image'), function(req, res, next) {
                 pic.save();
                 var response = {
                     "status": 200,
-                    "msg": 'success'
+                    "msg": 'success',
+                    "data": {
+                        picName: picInfo
+                    }
                 };
                 res.json(response);
             }

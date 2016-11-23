@@ -27,11 +27,11 @@ var server = http.createServer(app);
  * Create HTTPS server.
  */
 
-var options = {
-  key: fs.readFileSync('./ssl/server-key.pem'),
-  ca: [fs.readFileSync('./ssl/ca-cert.pem')],
-  cert: fs.readFileSync('./ssl/server-cert.pem')
-};
+// var options = {
+//   key: fs.readFileSync('./ssl/server-key.pem'),
+//   ca: [fs.readFileSync('./ssl/ca-cert.pem')],
+//   cert: fs.readFileSync('./ssl/server-cert.pem')
+// };
 
 // var server = https.createServer(options, app);
 
