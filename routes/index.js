@@ -14,7 +14,7 @@ var router = express.Router();
 var upload = multer({ dest: '/tmp/' });
 
 // var fileDownloadDir = '/Users/xby/weixin/uploadFile/files/';
-var fileDownloadDir = '/www/iconfont/files/';
+var fileDownloadDir = '/www/uploadFile/files/';
 
 /*
  主页
