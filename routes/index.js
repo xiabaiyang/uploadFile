@@ -89,7 +89,7 @@ router.get('/download/', function(req, res, next) {
 router.get('/getFileAddr', function (req, res, next) {
     var type = req.query.type;
     var basePath = 'http://104.131.78.218:3000/files/';
-    var files = fs.readdirSync('/Users/xby/weixin/uploadFile/files/' + type);
+    var files = fs.readdirSync(fileDownloadDir + type);
     var fileAddrs = files.map(function (fileName, index) {
         return basePath + type + '/' + fileName;
     });
