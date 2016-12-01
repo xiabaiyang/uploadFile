@@ -1,10 +1,11 @@
-// var OL_Action_Root = "http://127.0.0.1:3000"; 
+// var OL_Action_Root = "http://127.0.0.1:3000";
 // var OL_Action_Root = "http://119.29.68.244:3000";
-var OL_Action_Root = "http://104.131.78.218:3000";
+var OL_Action_Root = "http://104.131.78.218:3001";
 
-function upload() {            
+function upload() {
     var formData = new FormData($("#imagelist")[0]);
     formData.append('picName', $('picName').val());
+    console.log(formData);
     $.ajax({
         url: OL_Action_Root + '/file_upload',
         type: 'POST',
