@@ -13,7 +13,8 @@ var router = express.Router();
 
 var upload = multer({ dest: '/tmp/' });
 
-var fileDownloadDir = '/Users/xby/weixin/uploadFile/files/';
+// var fileDownloadDir = '/Users/xby/weixin/uploadFile/files/';
+var fileDownloadDir = '/www/iconfont/files/';
 
 /*
  主页
@@ -87,7 +88,7 @@ router.get('/download/', function(req, res, next) {
 
 router.get('/getFileAddr', function (req, res, next) {
     var type = req.query.type;
-    var basePath = 'http://localhost:3000/files/';
+    var basePath = 'http://104.131.78.218:3000/files/';
     var files = fs.readdirSync('/Users/xby/weixin/uploadFile/files/' + type);
     var fileAddrs = files.map(function (fileName, index) {
         return basePath + type + '/' + fileName;
@@ -164,7 +165,7 @@ router.post('/file_upload', upload.array('image'), function(req, res, next) {
     }
 
     var storageDir = './files/' + fileType + '/'; // 服务器存放地址
-    var downloadAddr = 'http://localhost:3000/files/' + fileType + '/' + req.files[0].originalname; // 图片下载地址
+    var downloadAddr = 'http://104.131.78.218:3000/files/' + fileType + '/' + req.files[0].originalname; // 图片下载地址
     var des_file = storageDir + req.files[0].originalname;
     fs.readFile(req.files[0].path, function (err, data) {
         fs.writeFile(des_file, data, function (err) {
