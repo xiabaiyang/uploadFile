@@ -16,6 +16,9 @@ var upload = multer({ dest: '/tmp/' });
 // var fileDownloadDir = '/Users/xby/weixin/uploadFile/files/';
 var fileDownloadDir = '/www/uploadFile/files/';
 
+var serverIp = 'http://104.131.78.218:3000';
+// var serverIp = 'http://127.0.0.1:3000';
+
 /*
  主页
  */
@@ -88,16 +91,19 @@ router.get('/download/', function(req, res, next) {
 
 router.get('/getFileAddr', function (req, res, next) {
     var type = req.query.type;
-    var basePath = 'http://104.131.78.218:3000/files/';
+    var basePath = serverIp + '/files/';
     var files = fs.readdirSync(fileDownloadDir + type);
-    var fileAddrs = files.map(function (fileName, index) {
-        return basePath + type + '/' + fileName;
+    var files = files.map(function (fileName, index) {
+        return {
+            addr: basePath + type + '/' + fileName,
+            name: fileName.split('.svg')[0]
+        }
     });
     var response = {
           "status": 200,
           "msg": 'success',
           "data": {
-              addr: fileAddrs
+              addr: files
            }
     };
     res.json(response);
@@ -153,10 +159,13 @@ router.get('/file/:fileName', function(req, res, next) {
  文件上传
  */
 router.post('/file_upload', upload.array('image'), function(req, res, next) {
-    var picInfo = req.body.picName[0];
+    // var picInfo = req.body.picName[0];
     console.log('start upload...');
     var fileType = req.body.fileType;
-    if(undefined == req.files[0]) {
+    var uploadFileNum = req.files.length;
+    var des_file = [];
+    var fileOriginalName = [];
+    if(uploadFileNum < 1) {
         res.json({
             "status": 400,
             "msg":"没有选择要上传的文件"
@@ -165,36 +174,47 @@ router.post('/file_upload', upload.array('image'), function(req, res, next) {
     }
 
     var storageDir = './files/' + fileType + '/'; // 服务器存放地址
-    var downloadAddr = 'http://104.131.78.218:3000/files/' + fileType + '/' + req.files[0].originalname; // 图片下载地址
-    var des_file = storageDir + req.files[0].originalname;
-    fs.readFile(req.files[0].path, function (err, data) {
-        fs.writeFile(des_file, data, function (err) {
-            if(err){
-                res.json({
-                    "status": 500,
-                    "msg": '文件保存失败'
-                });
-            }
-            else {
-                // 存储图片相关信息到数据库
-                var pic = new Picture({
-                    picName: picInfo,
-                    addr: des_file,
-                    createTime: new Date()
-                });
-
-                pic.save();
-                var response = {
-                    "status": 200,
-                    "msg": 'success',
-                    "data": {
-                        addr: downloadAddr
+    var uploadInfo = [];
+    for (var i = 0; i < uploadFileNum; i++) {
+        var count = 0; // 存储文件计数用
+        (function (i) {
+            fileOriginalName[i] = req.files[i].originalname;
+            des_file[i] = storageDir + fileOriginalName[i];
+            uploadInfo.push({
+                addr: serverIp + '/files/' + fileType + '/' + fileOriginalName[i],
+                name: fileOriginalName[i]
+            });
+            fs.readFile(req.files[i].path, function (err, data) {
+                fs.writeFile(des_file[i], data, function (err) {
+                    if(err){
+                        res.json({
+                            "status": 500,
+                            "msg": '文件保存失败'
+                        });
                     }
-                };
-                res.json(response);
-            }
-        });
-    });
+                    else {
+                        // 存储图片相关信息到数据库
+                        new Picture({
+                            picName: fileOriginalName[i],
+                            addr: des_file,
+                            createTime: new Date()
+                        }).save();
+
+                        count ++;
+
+                        if (count === uploadFileNum) {
+                          var response = {
+                              "status": 200,
+                              "msg": 'success',
+                              "data": uploadInfo
+                          };
+                          res.json(response);
+                        }
+                    }
+                });
+            });
+        })(i)
+    }
 });
 
 module.exports = router;
