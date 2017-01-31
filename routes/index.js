@@ -5,6 +5,8 @@ var path = require('path');
 var mime = require('mime');
 var http = require('http');
 
+var archiver = require('archiver');
+
 var mongoose = require('mongoose');
 mongoose.Promise = require('bluebird');
 var Picture = mongoose.model('Picture'); // 注意最后的 s
@@ -107,6 +109,57 @@ router.get('/getFileAddr', function (req, res, next) {
            }
     };
     res.json(response);
+});
+
+/*
+  下载打包文件
+*/
+router.get('/pack', function (req, res, next) {
+    var type = req.query.type;
+    var packedFilePath = path.resolve(__dirname, '../files/' + type + '.zip');
+    // var packedDownloadPath = 'http://127.0.0.1:3000' + '/files/' + type + '.zip';
+    var packedDownloadPath = serverIp + '/files/' + type + '.zip';
+    var packedFileName = type + '.zip';
+    console.log('打包文件路径：' + packedFilePath);
+      // create a file to stream archive data to.
+    var output = fs.createWriteStream('files/' + type + '.zip');
+    var archive = archiver('zip', {
+        store: true // Sets the compression method to STORE.
+    });
+
+    // good practice to catch this error explicitly
+    archive.on('error', function(err) {
+        throw err;
+    });
+
+    // pipe archive data to the file
+    archive.pipe(output);
+
+    archive.directory('files/' + type + '/');
+
+    archive.finalize();
+
+    // listen for all archive data to be written
+    output.on('close', function() {
+        var response = {
+              "status": 200,
+              "msg": 'success',
+              "data": {
+                  addr: packedDownloadPath,
+                  name: packedFileName
+               }
+        };
+        res.json(response);
+
+        // res.download(packedFilePath, packedFileName, function(err) {
+        //     if (err) {
+        //         console.log('打包下载失败');
+        //     }
+        //     else {
+        //         console.log('打包下载成功');
+        //     }
+        // });
+    });
 });
 
 /*
