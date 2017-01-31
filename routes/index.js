@@ -15,7 +15,7 @@ var router = express.Router();
 
 var upload = multer({ dest: '/tmp/' });
 
-// var fileDownloadDir = '/Users/xby/weixin/uploadFile/files/';
+// var fileDownloadDir = '/Users/xby/Desktop/IconFont/uploadFile/files/';
 var fileDownloadDir = '/www/uploadFile/files/';
 
 var serverIp = 'http://104.131.78.218:3000';
