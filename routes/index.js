@@ -15,11 +15,11 @@ var router = express.Router();
 
 var upload = multer({ dest: '/tmp/' });
 
-// var fileDownloadDir = '/Users/xby/Desktop/IconFont/uploadFile/files/';
-var fileDownloadDir = '/www/uploadFile/files/';
+var fileDownloadDir = '/Users/xby/Desktop/IconFont/uploadFile/files/';
+// var fileDownloadDir = '/www/uploadFile/files/';
 
-var serverIp = 'http://104.131.78.218:3000';
-// var serverIp = 'http://127.0.0.1:3000';
+// var serverIp = 'http://104.131.78.218:3000';
+var serverIp = 'http://127.0.0.1:3000';
 
 /*
  主页
@@ -159,6 +159,30 @@ router.get('/pack', function (req, res, next) {
         //         console.log('打包下载成功');
         //     }
         // });
+    });
+});
+
+router.get('/getDetail', function(req, res, next) {
+    var path = req.query.path;
+    var svgPath = fileDownloadDir + path;
+    console.log(svgPath);
+    fs.readFile(svgPath, 'utf-8', function (err, data) {
+      if(err){
+          res.json({
+              "status": 500,
+              "msg": '获取文件细节失败'
+          });
+      }
+      else {
+          var response = {
+              "status": 200,
+              "msg": 'success',
+              "data": data
+          };
+          res.json(response);
+          // res.write(data);
+          // res.end();
+      }
     });
 });
 
